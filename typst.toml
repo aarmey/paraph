@@ -1,0 +1,14 @@
+[package]
+name = "paraph"
+version = "0.1.0"
+entrypoint = "lib.typ"
+authors = ["Aaron Meyer"]
+license = "MIT-0"
+description = "Data-encoding seals for letters: phyllotaxis, ring, Truchet, Rule 30 and chord-wheel fingerprints of your text."
+repository = "https://github.com/aarmey/paraph"
+keywords = ["seal", "fingerprint", "letter", "hash", "visualization"]
+categories = ["visualization"]
+# Oldest Typst this package is intended to support. Developed and tested on 0.15.1;
+# raise or lower this only after testing (needs int.bit-* methods and the `curve` element).
+compiler = "0.14.0"
+exclude = ["examples/*.pdf", "tests/*", ".github/*"]
