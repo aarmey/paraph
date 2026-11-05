@@ -2,3 +2,5 @@
 // Public API is re-exported from here as issues land (see README / issue #1).
 
 #let paraph-version = "0.1.0"
+
+#import "src/digest.typ": digest, digest-hex, bit, bits, bit-string, byte
