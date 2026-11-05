@@ -12,6 +12,7 @@ def digest(data, salt=""):
         out += h32(data, r, salt).to_bytes(4, "big")
     return bytes(out)
 import sys
+import random
 for s, salt in [("",""),("abc",""),("abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq",""),("Grüße → ü",""),("abc","x")]:
     print(repr(s), repr(salt), digest(s.encode(), salt).hex())
 # avalanche
@@ -24,3 +25,23 @@ for _ in range(500):
     a,b = digest(m), digest(bytes(m2))
     tot += sum(bin(x^y).count("1") for x,y in zip(a,b)); n+=1
 print("mean flipped bits", tot/n, "of 256")
+
+# ---- Rule 30 rosette reference (issue #9) -------------------------------------------
+def rule30_rows(seed_bits, rings=22):
+    W = len(seed_bits)
+    rows = [list(seed_bits)]
+    for _ in range(rings - 1):
+        p = rows[-1]
+        rows.append([(30 >> (4 * p[(i - 1) % W] + 2 * p[i] + p[(i + 1) % W])) & 1 for i in range(W)])
+    return rows
+
+def bits_of(d, n):
+    return [(d[i // 8] >> (7 - i % 8)) & 1 for i in range(n)]
+
+if __name__ == "__main__":
+    d = digest(b"paraph-v1\nabc")
+    rows = rule30_rows(bits_of(d, 64))
+    print("rule30 seed  ", "".join(map(str, rows[0])))
+    print("rule30 ring 5", "".join(map(str, rows[5])))
+    print("rule30 ring21", "".join(map(str, rows[21])))
+    print("rule30 live cells", sum(map(sum, rows)))

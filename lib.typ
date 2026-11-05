@@ -9,3 +9,4 @@
 #import "src/core.typ": defaults, resolve, check, with-opacity, ink-for, tinted, sw, put, canvas, tick, orientation-tick, boundary-ring, dot
 #import "src/seals/ring.typ": ring-seal
 #import "src/seals/phyllotaxis.typ": phyllotaxis-seal
+#import "src/seals/rule30.typ": rule30-seal
