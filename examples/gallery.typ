@@ -3,7 +3,7 @@
 #import "../lib.typ": *
 #import "../src/seals/truchet.typ": cell-count
 
-#set page(paper: "us-letter", margin: 0.75in)
+#set page(width: 8.5in, height: auto, margin: 0.75in) // height: auto, so the page fits the content
 #set text(size: 9pt)
 #show raw: set text(size: 7.5pt)
 
