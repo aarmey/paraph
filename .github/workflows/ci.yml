@@ -19,3 +19,5 @@ jobs:
             echo "== $f"
             typst compile --root . "$f" "out/$(basename "$f" .typ).pdf"
           done
+      - name: Cross-check bit dump against the Python reference
+        run: python3 tests/check_dump.py
