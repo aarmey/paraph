@@ -2,7 +2,7 @@
 
 Data seals for Typst letters: a small circular mark that is a visual fingerprint of your letter's text. Change a single character and the seal changes.
 
-![Five seal types for one message, and for the same message with one character changed](docs/gallery.png)
+![Five seal types for one message, and for the same message with one character changed](docs/gallery.svg)
 
 Five styles are included. They are all drawn as vector graphics, so they stay sharp at any size.
 
