@@ -1,0 +1,21 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: typst-community/setup-typst@v4
+        with:
+          typst-version: 0.14.0
+      - name: Compile tests and examples
+        run: |
+          mkdir -p out
+          for f in tests/*.typ examples/*.typ; do
+            echo "== $f"
+            typst compile --root . "$f" "out/$(basename "$f" .typ).pdf"
+          done
