@@ -1,0 +1,48 @@
+name: Demo site
+
+# Builds the demonstration page (site/index.typ, via Typst's HTML export) plus PDFs of the
+# examples. Building runs on every PR, which also checks that every seal and example compiles.
+# Deploying to GitHub Pages happens only on pushes to main.
+# One-time setup: repository Settings > Pages > Source: "GitHub Actions".
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: typst-community/setup-typst@v4
+        with:
+          # HTML export is experimental and changes between releases, so pin the version the site was built with.
+          typst-version: 0.15.1
+      - name: Build site
+        run: sh site/build.sh
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
