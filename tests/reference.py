@@ -59,3 +59,36 @@ if __name__ == "__main__":
     d = digest(b"paraph-v1\nabc")
     print("chords", chords(d))
     print("rim bits 1..59", "".join(str(b) for b in bits_of(d, 60)[1:]))
+
+
+# ---- Bit dump for tests/check_dump.py -------------------------------------------------------
+import re as _re
+
+def _norm(s):
+    s = s.replace("\r\n", "\n").replace("\r", "\n")
+    s = "\n".join(l.strip() for l in s.split("\n"))
+    return _re.sub(r"\n{3,}", "\n\n", s).strip()
+
+def message_of_dict(pairs):
+    """Canonical message for a dictionary source (mirrors src/input.typ, ASCII text only)."""
+    return ("paraph-v1\n" + "\x1e".join(k + "\x1f" + _norm(v) for k, v in pairs)).encode()
+
+def truchet_cell_count():
+    return sum(1 for r in range(16) for c in range(16) if (c - 7.5) ** 2 + (r - 7.5) ** 2 <= 8.2 ** 2)
+
+def dump(pairs):
+    d = digest(message_of_dict(pairs))
+    bs = lambda a, b: "".join(str(x) for x in bits_of(d, 256)[a:b])
+    n = truchet_cell_count()
+    return {
+        "digest": d.hex(),
+        "ring": bs(0, 200),
+        "phyllotaxis": bs(0, 256),
+        "truchet": bs(0, n),
+        "truchet-cells": n,
+        "rule30": ["".join(map(str, r)) for r in rule30_rows(bits_of(d, 64))],
+        "chord-rim": bs(1, 60),
+        "chord-chords": [list(c) for c in chords(d)],
+    }
+
+SAMPLE = [("sender", "Aaron Meyer"), ("recipient", "J. Smith"), ("date", "2026-11-04"), ("body", "Test.")]
