@@ -45,3 +45,17 @@ if __name__ == "__main__":
     print("rule30 ring 5", "".join(map(str, rows[5])))
     print("rule30 ring21", "".join(map(str, rows[21])))
     print("rule30 live cells", sum(map(sum, rows)))
+
+# ---- Chord wheel reference (issue #11) -----------------------------------------------
+def chords(d):
+    out = []
+    for k in range(24):
+        a = d[k] % 60
+        b = (a + 3 + d[k + 8] % 54) % 60
+        out.append((a, b))
+    return out
+
+if __name__ == "__main__":
+    d = digest(b"paraph-v1\nabc")
+    print("chords", chords(d))
+    print("rim bits 1..59", "".join(str(b) for b in bits_of(d, 60)[1:]))
