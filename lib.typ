@@ -12,3 +12,4 @@
 #import "src/seals/rule30.typ": rule30-seal
 #import "src/seals/truchet.typ": truchet-seal
 #import "src/seals/chord.typ": chord-seal
+#import "src/api.typ": seal, seal-at, seal-page, seal-digest, kinds as seal-kinds, page-ok
