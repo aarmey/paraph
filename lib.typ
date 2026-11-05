@@ -10,3 +10,4 @@
 #import "src/seals/ring.typ": ring-seal
 #import "src/seals/phyllotaxis.typ": phyllotaxis-seal
 #import "src/seals/rule30.typ": rule30-seal
+#import "src/seals/truchet.typ": truchet-seal
