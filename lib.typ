@@ -6,3 +6,4 @@
 #import "src/digest.typ": digest, digest-hex, bit, bits, bit-string, byte
 #import "src/input.typ": message, source-digest, content-text, normalize-text
 #import "src/geom.typ": polar, polar-x, arc-path, arc-segments, wedge, quarter
+#import "src/core.typ": defaults, resolve, check, with-opacity, ink-for, tinted, sw, put, canvas, tick, orientation-tick, boundary-ring, dot
